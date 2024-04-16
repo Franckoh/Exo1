@@ -1,0 +1,71 @@
+Fonction generate_truth_table(n)
+    table ← liste vide
+    Pour i allant de 0 à 2^n exclu
+        row ← liste vide
+        Pour j allant de 0 à n exclu
+            row.ajouter((i div (2^j)) modulo 2)
+        table.ajouter(row)
+    Retourner table
+
+Fonction principale main()
+    Afficher "Entrez le nombre de variables : "
+    Lire n
+    variables ← liste vide
+    Pour i allant de 1 à n inclus
+        Afficher "Entrez le nom de la variable " + i + " : "
+        Lire variable_name
+        variables.ajouter(variable_name)
+
+    Afficher une ligne vide
+
+    Afficher "Variables :"
+    Pour chaque variable dans variables
+        Afficher variable
+        Si ce n'est pas la dernière variable
+            Afficher " | "
+    Afficher une ligne vide
+
+    truth_table ← Appeler generate_truth_table avec n comme argument
+
+    Afficher une ligne vide
+    Afficher "Table de vérité :"
+    Afficher "-" répété 6 * n + 3 fois
+    Pour chaque row dans truth_table
+        Afficher chaque élément de row séparé par " | "
+        Afficher une ligne vide
+    Afficher "-" répété 6 * n + 3 fois
+
+    Afficher une ligne vide
+
+    Afficher "Première forme canonique :"
+    Pour chaque i, row dans truth_table
+        terms ← liste vide
+        Pour chaque j, value dans row
+            Si value est égal à 1
+                terms.ajouter(variables[j])
+            Sinon si value est égal à 0
+                terms.ajouter("not" + variables[j])
+        Si terms n'est pas vide
+            Afficher " and " joignant tous les éléments de terms
+            Si ce n'est pas la dernière ligne de truth_table
+                Afficher " or "
+    Afficher une ligne vide
+
+    Afficher une ligne vide
+
+    Afficher "Deuxième forme canonique :"
+    Pour chaque i, row dans truth_table
+        terms ← liste vide
+        Pour chaque j, value dans row
+            Si value est égal à 0
+                terms.ajouter(variables[j])
+            Sinon si value est égal à 1
+                terms.ajouter("not" + variables[j])
+        Si terms n'est pas vide
+            Afficher " or " joignant tous les éléments de terms
+            Si ce n'est pas la dernière ligne de truth_table
+                Afficher " and "
+    Afficher une ligne vide
+
+Si __name__ est égal à "__main__"
+    Appeler la fonction main()
