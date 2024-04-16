@@ -1,0 +1,56 @@
+def generate_truth_table(n):
+    table = []
+    for i in range(2**n):
+        row = []
+        for j in range(n):
+            row.append((i // (2**j)) % 2)
+        table.append(row)
+    return table
+
+def main():
+    n = int(input("ENTREZ LES NOMBRES DE VARIABLES : "))
+    variables = []
+    for i in range(n):
+        variable_name = input(f"ENTREZ LE NOM DE VARIABLES {i+1} : ")
+        variables.append(variable_name)
+
+    print("\nVariables :", " | ".join(variables))
+
+    truth_table = generate_truth_table(n)
+    print("\nTABLE DE VÉRITÉ :")
+    print("-" * (6 * n + 3))
+    for row in truth_table:
+        print(" | ".join(str(x) for x in row))
+    print("-" * (6 * n + 3))
+
+    print("\nPREMIÈRE FORME CANONIQUE :")
+    for i, row in enumerate(truth_table):
+        terms = []
+        for j, value in enumerate(row):
+            if value == 1:
+                terms.append(variables[j])
+            elif value == 0:
+                terms.append(f"not{variables[j]}")
+        if terms:
+            print(" and ".join(terms), end="")
+            if i < len(truth_table) - 1:
+                print(") or (", end="")
+    print()
+
+    print("\nDEUXIÈME FORME CANONIQUE  :")
+    for i, row in enumerate(truth_table):
+        terms = []
+        for j, value in enumerate(row):
+            if value == 0:
+                terms.append(variables[j])
+            elif value == 1:
+                terms.append(f"not{ variables[j]}")
+        if terms:
+            print(" or ".join(terms), end="")
+            if i < len(truth_table) - 1:
+                print(") and (", end="")
+    print()
+
+if __name__ == "__main__":
+    main()
+  
